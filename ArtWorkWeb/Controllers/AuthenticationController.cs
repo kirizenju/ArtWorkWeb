@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using BussinessTier;
+using BussinessTier.Payload;
+using ArtWorkWeb.Service.Interfaces;
+using BussinessTier.Constants;
 
 namespace ArtWorkWeb.Controllers
 {
@@ -12,12 +16,17 @@ namespace ArtWorkWeb.Controllers
             _userService = userService;
         }
 
-        [HttpPost(ApiEndPointConstant.User.UserLoginEndPoint)]
+        [HttpPost(ApiEndPointConstant.Authentication.Login)]
         [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> LoginUser(LoginFirebaseRequest request)
+        [ProducesErrorResponseType(typeof(UnauthorizedObjectResult))]
+        public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
-            var response = await _userService.LoginUser(request);
-            return Ok(response);
+            var loginResponse = await _userService.Login(loginRequest);
+            if (loginResponse == null)
+                throw new BadHttpRequestException(MessageConstant.LoginMessage.InvalidUsernameOrPassword);
+            //if (loginResponse.Status == AccountStatus.Deactivate)
+            //    throw new BadHttpRequestException(MessageConstant.LoginMessage.DeactivatedAccount);
+            return Ok(loginResponse);
         }
     }
 }

@@ -244,14 +244,9 @@ namespace DataTier.Models
 
                 entity.Property(e => e.Password).HasMaxLength(255);
 
-                entity.Property(e => e.RoleId).HasColumnName("Role_Id");
+                entity.Property(e => e.Role).HasMaxLength(255);
 
                 entity.Property(e => e.Username).HasMaxLength(255);
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK__User__Role_Id__398D8EEE");
             });
 
             OnModelCreatingPartial(modelBuilder);
