@@ -5,18 +5,37 @@ namespace DataTier.Repository.Implement
 {
     public class UnitOfWork<TContext>: IUnitOfWork <TContext> where TContext : DbContext
     {
+
+        private readonly TContext _context;
+        private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
+
         public TContext Context { get; }
-        private Dictionary<Type, object> _repositories;
-        public UnitOfWork(TContext context) { Context = context; }
-        public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class 
-        {  
-            _repositories = new Dictionary<Type, object>();
-            if (_repositories.TryGetValue(typeof(TEntity), out object repository)) { 
-                return (IGenericRepository<TEntity>)repository;
+
+        public UnitOfWork(TContext context)
+        {
+            _context = context;
+        }
+
+        //public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class 
+        //{  
+        //    _repositories = new Dictionary<Type, object>();
+        //    if (_repositories.TryGetValue(typeof(TEntity), out object repository)) { 
+        //        return (IGenericRepository<TEntity>)repository;
+        //    }
+        //    repository=new GenericRepository<TEntity>(Context);
+        //    _repositories.Add(typeof(TEntity), repository);
+        //    return GetRepository<TEntity>(); 
+        //}
+        public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class
+        {
+            var entityType = typeof(TEntity);
+            if (!_repositories.ContainsKey(entityType))
+            {
+                var repository = new GenericRepository<TEntity>(_context);
+                _repositories.Add(entityType, repository);
             }
-            repository=new GenericRepository<TEntity>(Context);
-            _repositories.Add(typeof(TEntity), repository);
-            return GetRepository<TEntity>(); 
+
+            return (IGenericRepository<TEntity>)_repositories[entityType];
         }
         public void Dispose()
         {
