@@ -11,7 +11,7 @@ namespace ArtWorkWeb.Service.Implement
 {
     public class UserService : BaseService<UserService>, IUserService
     {
-        public UserService(IUnitOfWork<ArtWorkDBContext> unitOfWork, ILogger<UserService> logger) : base(unitOfWork, logger)
+        public UserService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<UserService> logger) : base(unitOfWork, logger)
         {
 
         }

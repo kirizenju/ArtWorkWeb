@@ -7,7 +7,7 @@ namespace DataTier.Models
     {
         public int IdPreOrder { get; set; }
         public int UserId { get; set; }
-        public string Desc { get; set; } = null!;
+        public string DescPreOrder { get; set; } = null!;
         public string Status { get; set; } = null!;
         public int ArtworkId { get; set; }
 

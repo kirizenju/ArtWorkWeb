@@ -12,6 +12,8 @@ namespace DataTier.Models
 
         public int IdSubscription { get; set; }
         public decimal Amount { get; set; }
+        public string? DesSubscription { get; set; }
+        public string? SubscriptionName { get; set; }
 
         public virtual ICollection<Transaction> Transactions { get; set; }
     }

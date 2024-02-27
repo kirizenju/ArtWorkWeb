@@ -14,7 +14,7 @@ namespace ArtWorkWeb.Extensions
     {
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork<ArtWorkDBContext>, UnitOfWork<ArtWorkDBContext>>();
+            services.AddScoped<IUnitOfWork<projectSWDContext>, UnitOfWork<projectSWDContext>>();
             return services;
         }
         public static IServiceCollection AddDatabase(this IServiceCollection services, WebApplicationBuilder builder)
@@ -23,7 +23,7 @@ namespace ArtWorkWeb.Extensions
                  .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                  .Build();
 
-            services.AddDbContext<ArtWorkDBContext>(options =>
+            services.AddDbContext<projectSWDContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerDatabase"));
             });
