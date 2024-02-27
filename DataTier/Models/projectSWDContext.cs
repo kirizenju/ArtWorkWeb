@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace DataTier.Models
 {
@@ -29,8 +30,11 @@ namespace DataTier.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-
-                optionsBuilder.UseSqlServer("Server=(local);Database=projectSWD;User Id=sa;Password=123;");
+                var builder = new ConfigurationBuilder()
+                                  .SetBasePath(Directory.GetCurrentDirectory())
+                                  .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfigurationRoot configuration = builder.Build();
+                optionsBuilder.UseSqlServer(configuration.GetConnectionString("SQLServerDatabase"));
             }
         }
 

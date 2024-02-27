@@ -10,12 +10,12 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Logging.ClearProviders();
-        // Add services to the container.
-        //builder.Services.AddCors(options =>
-        //{
-        //    options.AddPolicy(name: CorsConstant.PolicyName,
-        //        policy => { policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
-        //});
+      
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(name: CorsConstant.PolicyName,
+                policy => { policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
+        });
         
         builder.Services.AddControllers().AddJsonOptions(x =>
         {
@@ -31,13 +31,13 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddConfigSwagger();
         builder.Services.AddScoped<IUserService, UserService>();
-        builder.Services.AddCors();
+        
         var app = builder.Build();
-        app.UseCors(builder => 
-        { builder.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader(); 
-        });
+        //app.UseCors(builder => 
+        //{ builder.AllowAnyOrigin()
+        //    .AllowAnyMethod()
+        //    .AllowAnyHeader(); 
+        //});
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
