@@ -18,12 +18,15 @@ namespace ArtWorkWeb.Service.Implement
 
         public async Task<LoginResponse> Login(LoginRequest loginRequest)
         {
+            //string hashedPassword = PasswordUtil.HashPassword(loginRequest.Password);
+
             Expression<Func<User, bool>> searchFilter = p =>
-            p.Username.Equals(loginRequest.Username) &&
-                p.Password.Equals(PasswordUtil.HashPassword(loginRequest.Password));
+                p.Username.Equals(loginRequest.Username) &&
+                p.Password.Equals(loginRequest.Password);
 
             User user = await _unitOfWork.GetRepository<User>()
                 .SingleOrDefaultAsync(predicate: searchFilter);
+
             if (user == null) return null;
 
             var token = JwtUtil.GenerateJwtToken(user);
@@ -31,15 +34,16 @@ namespace ArtWorkWeb.Service.Implement
             LoginResponse loginResponse = new LoginResponse()
             {
                 AccessToken = token,
-                UserInfo=new UserResponse()
+                UserInfo = new UserResponse()
                 {
-                    IdUser=user.IdUser,
-                    Username=user.Username,
+                    IdUser = user.IdUser,
+                    Username = user.Username,
                     Role = EnumUtil.ParseEnum<RoleEnum>(user.Role),
                 }
-                
             };
+
             return loginResponse;
         }
+
     }
 }
