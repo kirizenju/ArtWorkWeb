@@ -1,6 +1,7 @@
 ﻿using DataTier.Models;
 using DataTier.Repository.Interface;
 using DataTier.View.Product;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,30 @@ namespace DataTier.Repository.Implement
             }).Where(viewModel => viewModel != null).ToList();
 
             return userProductViewModels;
+        }
+
+        public List<HotProductViewModel> GetHotProduct()
+        {
+            var maxLikes = _context.Likes
+                .GroupBy(l => l.ArtworkId)
+                .Select(g => new { ArtworkId = g.Key, Count = g.Count() })
+                .OrderByDescending(x => x.Count)
+                .FirstOrDefault()?.Count;
+
+            if (maxLikes == null)
+                return new List<HotProductViewModel>(); // Trả về danh sách rỗng nếu không có sản phẩm nào
+
+            // Lấy ra tất cả sản phẩm có số lượt like bằng maxLikes
+            var mostLikedArtworks = _context.Artworks
+                .Where(a => a.Likes.Count == maxLikes)
+                .Select(a => new HotProductViewModel
+                {
+                    Name = a.Name,
+                    Price = a.Price
+                })
+                .ToList();
+
+            return mostLikedArtworks;
         }
 
         public List<ImageViewModel> GetImageURL(int artworkid)

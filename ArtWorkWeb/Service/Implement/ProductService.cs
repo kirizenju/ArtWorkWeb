@@ -64,5 +64,29 @@ namespace ArtWorkWeb.Service.Implement
                 response
                 );
         }
+
+        KeyValuePair<MessageViewModel, List<HotProductViewModel>> IProductService.GetHotProduct()
+        {
+            var response = _productRepository.GetHotProduct();
+            if (response == null)
+            {
+                return new KeyValuePair<MessageViewModel, List<HotProductViewModel>>(
+                        new MessageViewModel
+                        {
+                            StatusCode = System.Net.HttpStatusCode.NotFound,
+                            Message = "No product found"
+                        },
+                        null
+                        );
+            }
+            return new KeyValuePair<MessageViewModel, List<HotProductViewModel>>(
+                new MessageViewModel
+                {
+                    StatusCode = System.Net.HttpStatusCode.OK,
+                    Message = string.Empty
+                },
+                response
+                );
+        }
     }
 }
