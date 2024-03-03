@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using ArtWorkWeb.Service.Interfaces;
+using ArtWorkWeb.Service.Implement;
 
 namespace ArtWorkWeb.Extensions
 {
@@ -27,6 +29,9 @@ namespace ArtWorkWeb.Extensions
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerDatabase"));
             });
+
+            services.AddScoped<IProductService, ProductService>();
+            services.AddTransient<IProductRepository, ProductRepository>();
 
             return services;
         }
