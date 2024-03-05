@@ -18,9 +18,9 @@ namespace DataTier.Models
         public decimal? Price { get; set; }
         public int? Owner { get; set; }
         public string? Status { get; set; }
-        public int? CategoryId { get; set; }
+        public string? CategoryName { get; set; }
+        public string? Author { get; set; }
 
-        public virtual Category? Category { get; set; }
         public virtual User? OwnerNavigation { get; set; }
         public virtual ICollection<ImageList> ImageLists { get; set; }
         public virtual ICollection<Like> Likes { get; set; }

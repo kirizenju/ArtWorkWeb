@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using ArtWorkWeb.Service.Interfaces;
+using ArtWorkWeb.Service.Implement;
 
 namespace ArtWorkWeb.Extensions
 {
@@ -28,11 +30,16 @@ namespace ArtWorkWeb.Extensions
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerDatabase"));
             });
 
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+
             return services;
         }
         public static IServiceCollection AddJwtValidation(this IServiceCollection services)
         {
-            
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

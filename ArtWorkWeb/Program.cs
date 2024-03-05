@@ -10,22 +10,18 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Logging.ClearProviders();
-        // Add services to the container.
+
         builder.Services.AddCors(options =>
         {
             options.AddPolicy(name: CorsConstant.PolicyName,
-                policy =>
-                {
-                    policy.WithOrigins("*")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-                });
+                policy => { policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
         });
+
         builder.Services.AddControllers().AddJsonOptions(x =>
         {
             x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             x.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
-        });
+        }); ;
         builder.Services.AddDatabase(builder);
         builder.Services.AddUnitOfWork();
         builder.Services.AddJwtValidation();
@@ -34,10 +30,13 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddConfigSwagger();
-        builder.Services.AddScoped<IUserService, UserService>();
 
         var app = builder.Build();
-        
+        //app.UseCors(builder => 
+        //{ builder.AllowAnyOrigin()
+        //    .AllowAnyMethod()
+        //    .AllowAnyHeader(); 
+        //});
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -50,7 +49,7 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllers();
-                    
+
         app.Run();
     }
 }
