@@ -12,6 +12,7 @@ namespace DataTier.Models
         public string CustomerNumber { get; set; }
         public string CustomerEmail { get; set; }
         public string CustomerAddress { get; set; }
+
         public int IdOrder { get; set; }
         public int UserId { get; set; }
         public int ArtworkId { get; set; }
@@ -21,6 +22,7 @@ namespace DataTier.Models
       
         public virtual Artwork Artwork { get; set; } = null!;
         public virtual User User { get; set; } = null!;
+
     }
 
 }
