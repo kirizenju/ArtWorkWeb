@@ -34,6 +34,7 @@ namespace ArtWorkWeb.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IArtWorkService, ArWorkService>();
 
             return services;
         }
