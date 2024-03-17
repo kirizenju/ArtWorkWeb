@@ -27,6 +27,8 @@ public class Program
         builder.Services.AddJwtValidation();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddHttpContextAccessor();
+        builder.Services.AddScoped<IArtWorkService, ArWorkService>();
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddConfigSwagger();
