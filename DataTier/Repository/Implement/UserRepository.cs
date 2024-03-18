@@ -11,6 +11,20 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
+    public bool DeleteUser(int id)
+    {
+        var user = _context.Users.FirstOrDefault(e => e.IdUser == id);
+        if (user == null) { return false; }
+        _context.Users.Remove(user);
+        _context.SaveChanges();
+        return true;
+    }
+
+    public User? GetUserByID(int userid)
+    {
+        return _context.Users.Where(e => e.IdUser == userid).FirstOrDefault();
+    }
+
     public bool UpdateProfile(ProfileUpdateRequest model)
     {
         try

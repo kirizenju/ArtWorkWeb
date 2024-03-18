@@ -1,4 +1,5 @@
 ﻿using ArtWorkWeb.Service.Interfaces;
+using AutoMapper;
 using BussinessTier;
 using BussinessTier.Enums;
 using BussinessTier.Payload;
@@ -16,10 +17,42 @@ namespace ArtWorkWeb.Service.Implement
     public class UserService : BaseService<UserService>, IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UserService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<UserService> logger, IUserRepository userRepository) : base(unitOfWork, logger)
+        public UserService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<UserService> logger, IUserRepository userRepository, IMapper mapper) : base(unitOfWork, logger)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
+        }
+
+        public bool BanUser(int id)
+        {
+            return _userRepository.DeleteUser(id);
+        }
+
+        public KeyValuePair<MessageViewModel, UserProfileViewModel> GetUser(int id)
+        {
+            var user = _userRepository.GetUserByID(id);
+            if (user == null)
+            {
+                return new KeyValuePair<MessageViewModel, UserProfileViewModel>
+                    (
+                    new MessageViewModel
+                    {
+                        StatusCode = System.Net.HttpStatusCode.NotFound,
+                        Message = "Not found this user"
+                    },
+                    null
+                    );
+            }
+            var reponse = _mapper.Map<UserProfileViewModel>(user);
+            return new KeyValuePair<MessageViewModel, UserProfileViewModel>(
+                new MessageViewModel
+                {
+                    StatusCode = System.Net.HttpStatusCode.OK,
+                    Message = string.Empty
+                }, reponse
+                );
         }
 
         public async Task<LoginResponse> Login(LoginRequest loginRequest)

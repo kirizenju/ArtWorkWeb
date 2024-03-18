@@ -24,6 +24,29 @@ namespace ArtWorkWeb.Controllers
             var reponse = _userService.UpdateProfile(model);
             return Ok(reponse);
         }
+        [HttpGet("profile/get/{id}")]
+        public IActionResult GetUser(int id)
+        {
+            var reponse = _userService.GetUser(id);
+            if (reponse.Key.StatusCode.Equals(HttpStatusCode.NotFound))
+            {
+                return NotFound(reponse.Key);
+            }
+            return Ok(reponse.Value);
+        }
+        [HttpDelete("profile/ban/{id}")]
+        public IActionResult BanUser(int id)
+        {
+            var result = _userService.BanUser(id);
+            if (result != false)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NoContent();
+            }
+        }
 
     }
 }
