@@ -1,4 +1,5 @@
-﻿using DataTier.View.Product;
+﻿using DataTier.View.Common;
+using DataTier.View.Product;
 using DataTier.View.User;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace DataTier.Repository.Interface
 {
     public interface IUserRepository
     {
+        bool DeleteUser(int id);
+        Models.User? GetUserByID(int userid);
         bool UpdateProfile(ProfileUpdateRequest model);
     }
 }
