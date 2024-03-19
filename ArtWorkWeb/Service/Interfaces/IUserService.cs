@@ -15,5 +15,6 @@ namespace ArtWorkWeb.Service.Interfaces
         Task<LoginResponse> Login(LoginRequest loginRequest);
 
         MessageViewModel UpdateProfile(ProfileUpdateRequest model);
+
     }
 }
