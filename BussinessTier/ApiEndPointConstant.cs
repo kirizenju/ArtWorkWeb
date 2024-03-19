@@ -29,5 +29,10 @@ namespace BussinessTier
             public const string ArtWorksEndPoint = ApiEndpoint + "/artworks";
             public const string ArtWorkEndPoint = ArtWorksEndPoint + "/{id}";
         }
+        public static class Sub
+        {
+            public const string SubsEndPoint = ApiEndpoint + "/subs";
+            public const string SubEndPoint = SubsEndPoint + "/{id}";
+        }
     }
 }

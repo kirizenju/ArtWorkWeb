@@ -9,7 +9,7 @@ namespace ArtWorkWeb.Controllers
 {
     public class ArtworkController : BaseController<ArtworkController>
     {
-          private readonly IArtWorkService _artWorkService;
+        private readonly IArtWorkService _artWorkService;
 
         public ArtworkController(ILogger<ArtworkController> logger, IArtWorkService artWorkService) : base(logger)
         {
