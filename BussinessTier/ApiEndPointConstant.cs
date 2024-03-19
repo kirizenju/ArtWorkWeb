@@ -18,6 +18,12 @@ namespace BussinessTier
             public const string AuthenticationEndpoint = ApiEndpoint + "/auth";
             public const string Login = AuthenticationEndpoint + "/login";
         }
+        public static class User
+        {
+            public const string UsersEndpoint = ApiEndpoint + "/users";
+            public const string UserEndpoint = UsersEndpoint + "/{id}";
+            //public const string UserUpdateEndpoint = UserEndpoint + "/roles";
+        }
         public static class ArtWork
         {
             public const string ArtWorksEndPoint = ApiEndpoint + "/artworks";

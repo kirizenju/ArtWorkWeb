@@ -30,8 +30,8 @@ namespace ArtWorkWeb.Controllers
             //    throw new BadHttpRequestException(MessageConstant.LoginMessage.DeactivatedAccount);
             return Ok(loginResponse);
         }
-        [HttpGet(ApiEndPointConstant.ArtWork.ArtWorksEndPoint)]
-        [ProducesResponseType(typeof(GetArtWorkResponse), StatusCodes.Status200OK)]
+        [HttpGet(ApiEndPointConstant.User.UsersEndpoint)]
+        [ProducesResponseType(typeof(GetUserResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllUsers([FromQuery] UserFilter filter, [FromQuery] PagingModel pagingModel)
         {
             var response = await _userService.GetAllUsers(filter, pagingModel);
