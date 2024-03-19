@@ -20,7 +20,7 @@ namespace DataTier.Models
         public string? Status { get; set; }
         public string? CategoryName { get; set; }
         public string? Author { get; set; }
-
+        public string? Description { get; set; }
 
 
 
