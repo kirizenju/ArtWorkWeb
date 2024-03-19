@@ -3,6 +3,8 @@ using BussinessTier;
 using ArtWorkWeb.Service.Interfaces;
 using BussinessTier.Constants;
 using BussinessTier.Payload.User;
+using BussinessTier.Payload.ArtWork;
+using BussinessTier.Payload;
 
 namespace ArtWorkWeb.Controllers
 {
@@ -27,6 +29,13 @@ namespace ArtWorkWeb.Controllers
             //if (loginResponse.Status == AccountStatus.Deactivate)
             //    throw new BadHttpRequestException(MessageConstant.LoginMessage.DeactivatedAccount);
             return Ok(loginResponse);
+        }
+        [HttpGet(ApiEndPointConstant.ArtWork.ArtWorksEndPoint)]
+        [ProducesResponseType(typeof(GetArtWorkResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllUsers([FromQuery] UserFilter filter, [FromQuery] PagingModel pagingModel)
+        {
+            var response = await _userService.GetAllUsers(filter, pagingModel);
+            return Ok(response);
         }
     }
 }
