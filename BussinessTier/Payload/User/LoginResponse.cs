@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BussinessTier.Enums;
-namespace BussinessTier.Payload
+namespace BussinessTier.Payload.User
 {
     public class LoginResponse
     {

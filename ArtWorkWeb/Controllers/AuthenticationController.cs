@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BussinessTier;
-using BussinessTier.Payload;
 using ArtWorkWeb.Service.Interfaces;
 using BussinessTier.Constants;
+using BussinessTier.Payload.User;
+using BussinessTier.Payload.ArtWork;
+using BussinessTier.Payload;
 
 namespace ArtWorkWeb.Controllers
 {
@@ -28,5 +30,12 @@ namespace ArtWorkWeb.Controllers
             //    throw new BadHttpRequestException(MessageConstant.LoginMessage.DeactivatedAccount);
             return Ok(loginResponse);
         }
+        //[HttpGet(ApiEndPointConstant.User.UsersEndpoint)]
+        //[ProducesResponseType(typeof(GetUserResponse), StatusCodes.Status200OK)]
+        //public async Task<IActionResult> GetAllUsers([FromQuery] UserFilter filter, [FromQuery] PagingModel pagingModel)
+        //{
+        //    var response = await _userService.GetAllUsers(filter, pagingModel);
+        //    return Ok(response);
+        //}
     }
 }

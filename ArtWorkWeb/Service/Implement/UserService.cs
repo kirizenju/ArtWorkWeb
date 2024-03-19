@@ -3,7 +3,10 @@ using AutoMapper;
 using BussinessTier;
 using BussinessTier.Enums;
 using BussinessTier.Payload;
+using BussinessTier.Payload.ArtWork;
+using BussinessTier.Payload.User;
 using DataTier.Models;
+using DataTier.Repository.Implement;
 using DataTier.Repository.Interface;
 using DataTier.View.Common;
 using DataTier.View.User;
@@ -21,8 +24,7 @@ namespace ArtWorkWeb.Service.Implement
 
         public UserService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<UserService> logger, IUserRepository userRepository, IMapper mapper) : base(unitOfWork, logger)
         {
-            _userRepository = userRepository;
-            _mapper = mapper;
+            
         }
 
         public bool BanUser(int id)
@@ -125,5 +127,17 @@ namespace ArtWorkWeb.Service.Implement
                 };
             }
         }
+        public async Task<IPaginate<GetUserResponse>> GetAllUsers(UserFilter filter, PagingModel pagingModel)
+        {
+            IPaginate<GetUserResponse> response = await _unitOfWork.GetRepository<User>().GetPagingListAsync(
+                selector: x => _mapper.Map<GetUserResponse>(x),
+                filter: filter,
+                orderBy: x => x.OrderBy(x => x.IdUser),
+                page: pagingModel.page,
+                size: pagingModel.size
+                );
+            return response;
+        }
+
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BussinessTier.Payload
+namespace BussinessTier.Payload.User
 {
     public class AccountRequest
     {
@@ -19,6 +19,6 @@ namespace BussinessTier.Payload
 
         [EnumDataType(typeof(RoleEnum))]
         public RoleEnum Role { get; set; }
-     
+
     }
 }

@@ -11,6 +11,7 @@ namespace DataTier.View.Product
         public string? Status { get; set; }
         public string? CategoryName { get; set; }
         public string? Author { get; set; }
+        public string? Description { get; set; }
 
         public virtual Models.User? OwnerNavigation { get; set; }
         public virtual ICollection<ImageList> ImageLists { get; set; }
