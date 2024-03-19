@@ -68,6 +68,7 @@ namespace DataTier.Repository.Implement
                     Status = a.Status,
                     CategoryName = a.CategoryName,
                     Author = a.Author,
+                    Description = a.Description,
                     OwnerNavigation = a.OwnerNavigation,
                     ImageLists = a.ImageLists
                 })
@@ -99,6 +100,7 @@ namespace DataTier.Repository.Implement
                     Status = a.Status,
                     CategoryName = a.CategoryName,
                     Author = a.Author,
+                    Description = a.Description,
                     OwnerNavigation = a.OwnerNavigation,
                     ImageLists = a.ImageLists
                 })

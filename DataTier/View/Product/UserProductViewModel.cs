@@ -16,5 +16,6 @@ namespace DataTier.View.Product
         public string? Status { get; set; }
         public decimal? Price { get; set; }
         public string? Address { get; set; }
+       
     }
 }
