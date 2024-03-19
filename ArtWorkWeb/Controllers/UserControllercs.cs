@@ -47,6 +47,16 @@ namespace ArtWorkWeb.Controllers
                 return NoContent();
             }
         }
+        [HttpGet("profile/getall")]
+        public IActionResult GetALlUser()
+        {
+            var response = _userService.GetAllUser();
+            if (response.Key.StatusCode.Equals(HttpStatusCode.NotFound)) 
+            {
+                return NotFound(response.Key);
+            }
+            return Ok(response.Value);
+        }
 
     }
 }

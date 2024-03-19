@@ -9,6 +9,7 @@ namespace ArtWorkWeb.Service.Interfaces
     public interface IUserService
     {
         bool BanUser(int id);
+        KeyValuePair<MessageViewModel,List<UserProfileViewModel>> GetAllUser();
         KeyValuePair<MessageViewModel, UserProfileViewModel> GetUser(int id);
         Task<LoginResponse> Login(LoginRequest loginRequest);
 
