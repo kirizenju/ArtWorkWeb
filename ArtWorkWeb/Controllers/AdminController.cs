@@ -28,7 +28,7 @@ namespace YourProjectNamespace.Controllers
             }
 
             
-            user.IsActive = false; // 
+            //user.IsActive = false; // 
 
             _context.Entry(user).State = EntityState.Modified;
 
