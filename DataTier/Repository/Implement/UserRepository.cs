@@ -20,6 +20,20 @@ public class UserRepository : IUserRepository
         return true;
     }
 
+    public List<UserProfileViewModel> GetAllUser()
+    {
+        return _context.Users.Where(e => e.Role == "Customer").Select(e => new UserProfileViewModel
+        {
+            Username = e.Username,
+            Password = e.Password,
+            Phone = e.Phone,
+            Gender = e.Gender,
+            Email = e.Email,
+            Avatar =e.Avatar,
+            Address = e.Address,
+        }).ToList();
+    }
+
     public User? GetUserByID(int userid)
     {
         return _context.Users.Where(e => e.IdUser == userid).FirstOrDefault();

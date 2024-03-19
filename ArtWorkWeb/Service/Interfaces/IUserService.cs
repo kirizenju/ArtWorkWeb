@@ -10,10 +10,10 @@ namespace ArtWorkWeb.Service.Interfaces
     public interface IUserService
     {
         bool BanUser(int id);
-        Task<IPaginate<GetUserResponse>> GetAllUsers(UserFilter filter, PagingModel pagingModel);
+
         KeyValuePair<MessageViewModel, UserProfileViewModel> GetUser(int id);
         Task<LoginResponse> Login(LoginRequest loginRequest);
-
+        KeyValuePair<MessageViewModel,List<UserProfileViewModel>> GetAllUser();
         MessageViewModel UpdateProfile(ProfileUpdateRequest model);
 
     }

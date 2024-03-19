@@ -12,6 +12,7 @@ namespace DataTier.Repository.Interface
     public interface IUserRepository
     {
         bool DeleteUser(int id);
+        List<UserProfileViewModel> GetAllUser();
         Models.User? GetUserByID(int userid);
         bool UpdateProfile(ProfileUpdateRequest model);
     }

@@ -32,6 +32,28 @@ namespace ArtWorkWeb.Service.Implement
             return _userRepository.DeleteUser(id);
         }
 
+        public KeyValuePair<MessageViewModel, List<UserProfileViewModel>> GetAllUser()
+        {
+            var users = _userRepository.GetAllUser();
+            if (users == null)
+            {
+                return new KeyValuePair<MessageViewModel, List<UserProfileViewModel>>(
+                    new MessageViewModel
+                    {
+                        StatusCode = System.Net.HttpStatusCode.NotFound,
+                        Message = string.Empty,
+                    },null
+                    );
+            }
+            return new KeyValuePair<MessageViewModel, List<UserProfileViewModel>>(
+                new MessageViewModel
+                {
+                    StatusCode = System.Net.HttpStatusCode.OK,
+                    Message = string.Empty,
+                }, users
+                );
+        }
+
         public KeyValuePair<MessageViewModel, UserProfileViewModel> GetUser(int id)
         {
             var user = _userRepository.GetUserByID(id);
