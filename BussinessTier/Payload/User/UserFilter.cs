@@ -8,7 +8,11 @@ namespace BussinessTier.Payload.User
 {
     public class UserFilter
     {
-        public string Role { get; set; }
+        public string? Gender { get; set; }
+        public string? Email { get; set; }
+        public string? Avatar { get; set; }
+        public string? Phone { get; set; }
+        public string? Address { get; set; }
 
     }
 }

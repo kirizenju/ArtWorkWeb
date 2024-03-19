@@ -110,7 +110,7 @@ namespace ArtWorkWeb.Service.Implement
             IPaginate<GetUserResponse> response = await _unitOfWork.GetRepository<User>().GetPagingListAsync(
                 selector: x => _mapper.Map<GetUserResponse>(x),
                 filter: filter,
-                orderBy: x => x.OrderBy(x => x.Role),
+                orderBy: x => x.OrderBy(x => x.IdUser),
                 page: pagingModel.page,
                 size: pagingModel.size
                 );
