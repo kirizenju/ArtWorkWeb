@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BussinessTier;
-using BussinessTier.Payload;
 using ArtWorkWeb.Service.Interfaces;
 using BussinessTier.Constants;
+using BussinessTier.Payload.User;
 
 namespace ArtWorkWeb.Controllers
 {

@@ -28,7 +28,7 @@ namespace ArtWorkWeb.Controllers
         [ProducesResponseType(typeof(GetArtWorkResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetArtWorks([FromQuery] ArtWorkFilter filter, [FromQuery] PagingModel pagingModel)
         {
-            var response = await _artWorkService.GetArtWorks(filter, pagingModel);
+            var response = await _artWorkService.GetAllArtWorks(filter, pagingModel);
             return Ok(response);
         }
 
