@@ -128,6 +128,8 @@ namespace DataTier.Models
 
                 entity.Property(e => e.UserId).HasColumnName("User_Id");
 
+                entity.Property(e=> e.OrderStatus).HasColumnName("OrderStatus");
+
                 entity.HasOne(d => d.Artwork)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.ArtworkId)

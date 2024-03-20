@@ -6,10 +6,11 @@ using BussinessTier.Payload.ArtWork;
 using DataTier.Models;
 using DataTier.Repository.Implement;
 using DataTier.Repository.Interface;
+using DataTier.View.Product;
 
 namespace ArtWorkWeb.Service.Implement
 {
-    public class ArWorkService: BaseService<ArWorkService>, IArtWorkService
+    public class ArWorkService : BaseService<ArWorkService>, IArtWorkService
     {
         public ArWorkService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<ArWorkService> logger, IMapper mapper,
            IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
@@ -82,6 +83,33 @@ namespace ArtWorkWeb.Service.Implement
             return isSuccessful;
         }
 
-      
+        /// <summary>
+        /// Lấy ra danh sách category và số lượng sản phẩm theo category
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<CategoryViewModel>> GetAllCategories()
+        {
+            var categories = await _unitOfWork.GetRepository<Artwork>().GetListAsync();
+            var productByCategory = categories.GroupBy(x => x.CategoryName)
+                .Select(x => new CategoryViewModel
+                {
+                    Name = x.Key,
+                    TotalProduct = x.Count()
+                }).ToList();
+            return productByCategory;
+        }
+
+        public async Task<bool> ArtWorkOrder(int id)
+        {
+            _ = _unitOfWork.GetRepository<Order>().InsertAsync(new Order
+            {
+                IdArtwork = id,
+                UserId = 1,
+                Date = DateTime.Now,
+                OrderStatus = 1
+            });
+            bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
+            return isSuccessful;
+        }
     }
 }

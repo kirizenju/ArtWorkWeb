@@ -9,7 +9,7 @@ namespace ArtWorkWeb.Controllers
 {
     public class ArtworkController : BaseController<ArtworkController>
     {
-          private readonly IArtWorkService _artWorkService;
+        private readonly IArtWorkService _artWorkService;
 
         public ArtworkController(ILogger<ArtworkController> logger, IArtWorkService artWorkService) : base(logger)
         {
@@ -57,5 +57,22 @@ namespace ArtWorkWeb.Controllers
             if (!isSuccessful) return Ok(MessageConstant.ArtWork.UpdateStatusFailedMessage);
             return Ok(MessageConstant.ArtWork.UpdateStatusSuccessMessage);
         }
+
+        [HttpGet(ApiEndPointConstant.ArtWork.GroupCategories)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GroupCategories()
+        {
+            var response = await _artWorkService.GetAllCategories();
+            return Ok(response);
+        }
+
+        [HttpPost("/artworks/order/{id}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ArtWorkOrder(int id)
+        {
+            var isSuccessful = await _artWorkService.ArtWorkOrder(id);
+            if (!isSuccessful) return Ok(MessageConstant.ArtWork.UpdateStatusFailedMessage);
+            return Ok(MessageConstant.ArtWork.UpdateStatusSuccessMessage);
+        }
     }
-    }
+}

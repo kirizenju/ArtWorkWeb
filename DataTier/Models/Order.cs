@@ -15,6 +15,7 @@ namespace DataTier.Models
         public int IdOrder { get; set; }
         public int UserId { get; set; }
         public int ArtworkId { get; set; }
+        public int OrderStatus { get; set; }
         public DateTime Date { get; set; }
      
 
