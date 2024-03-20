@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BussinessTier;
-using BussinessTier.Payload;
 using ArtWorkWeb.Service.Interfaces;
 using BussinessTier.Constants;
+using BussinessTier.Payload.User;
+using BussinessTier.Payload.ArtWork;
+using BussinessTier.Payload;
+using DataTier.View.Common;
+using System.Net;
+using DataTier.View.User;
 
 namespace ArtWorkWeb.Controllers
 {
@@ -28,5 +33,36 @@ namespace ArtWorkWeb.Controllers
             //    throw new BadHttpRequestException(MessageConstant.LoginMessage.DeactivatedAccount);
             return Ok(loginResponse);
         }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterRequest request)
+        {
+            var response = await _userService.Register(request);
+            if (response)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(
+                    new MessageViewModel
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        Message = "Invalid user"
+                    }
+                    );
+            }
+        }
+
+
+
+
+        //[HttpGet(ApiEndPointConstant.User.UsersEndpoint)]
+        //[ProducesResponseType(typeof(GetUserResponse), StatusCodes.Status200OK)]
+        //public async Task<IActionResult> GetAllUsers([FromQuery] UserFilter filter, [FromQuery] PagingModel pagingModel)
+        //{
+        //    var response = await _userService.GetAllUsers(filter, pagingModel);
+        //    return Ok(response);
+        //}
+        
     }
 }

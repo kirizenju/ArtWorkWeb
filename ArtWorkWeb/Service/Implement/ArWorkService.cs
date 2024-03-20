@@ -39,7 +39,7 @@ namespace ArtWorkWeb.Service.Implement
             return response;
         }
 
-        public async Task<IPaginate<GetArtWorkResponse>> GetArtWorks(ArtWorkFilter filter, PagingModel pagingModel)
+        public async Task<IPaginate<GetArtWorkResponse>> GetAllArtWorks(ArtWorkFilter filter, PagingModel pagingModel)
         {
             IPaginate<GetArtWorkResponse> response = await _unitOfWork.GetRepository<Artwork>().GetPagingListAsync(
                 selector: x => _mapper.Map<GetArtWorkResponse>(x),

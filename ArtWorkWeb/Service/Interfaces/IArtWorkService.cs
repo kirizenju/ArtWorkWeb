@@ -10,7 +10,7 @@ namespace ArtWorkWeb.Service.Interfaces
     {
         Task<int> CreateNewArtwork(CreateArtWorkRequest request);
         Task<bool> DeleteArtWork(int artWorkId);
-        Task<IPaginate<GetArtWorkResponse>> GetArtWorks(ArtWorkFilter filter, PagingModel pagingModel);
+        Task<IPaginate<GetArtWorkResponse>> GetAllArtWorks(ArtWorkFilter filter, PagingModel pagingModel);
         Task<GetArtWorkResponse> GetArtWrokById(int artWorkId);
         Task<bool> UpdateArtWorkInfo(int artWorkID, UpdateArtWorkRequest request);
         Task<List<CategoryViewModel>> GetAllCategories();

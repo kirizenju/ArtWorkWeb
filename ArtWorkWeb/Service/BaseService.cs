@@ -9,24 +9,15 @@ namespace ArtWorkWeb.Service
     {
         protected IUnitOfWork<projectSWDContext> _unitOfWork;
         protected ILogger<T> _logger;
-
-        protected ILogger<ArWorkService> logger;
         protected IMapper _mapper;
-        protected IHttpContextAccessor httpContextAccessor;
+        protected IHttpContextAccessor _httpContextAccessor;
 
-        public BaseService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<T> logger)
+        protected BaseService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<T> logger, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
-
-        }
-
-        protected BaseService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<ArWorkService> logger, IMapper mapper, IHttpContextAccessor httpContextAccessor)
-        {
-            this._unitOfWork = unitOfWork;
-            this.logger = logger;
-            this._mapper = mapper;
-            this.httpContextAccessor = httpContextAccessor;
+            _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
     }
 }

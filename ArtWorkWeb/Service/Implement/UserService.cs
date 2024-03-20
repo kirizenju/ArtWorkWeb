@@ -3,14 +3,14 @@ using AutoMapper;
 using BussinessTier;
 using BussinessTier.Enums;
 using BussinessTier.Payload;
+using BussinessTier.Payload.User;
 using DataTier.Models;
+using DataTier.Repository.Implement;
 using DataTier.Repository.Interface;
 using DataTier.View.Common;
 using DataTier.View.User;
-using System;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq.Expressions;
-using System.Security.Principal;
-using System.Threading.Tasks;
 
 namespace ArtWorkWeb.Service.Implement
 {
@@ -19,15 +19,36 @@ namespace ArtWorkWeb.Service.Implement
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<UserService> logger, IUserRepository userRepository, IMapper mapper) : base(unitOfWork, logger)
+        public UserService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<UserService> logger, IMapper mapper, IHttpContextAccessor httpContextAccessor, IUserRepository userRepository) : base(unitOfWork, logger, mapper, httpContextAccessor)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
         }
 
         public bool BanUser(int id)
         {
             return _userRepository.DeleteUser(id);
+        }
+
+        public KeyValuePair<MessageViewModel, List<UserProfileViewModel>> GetAllUser()
+        {
+            var users = _userRepository.GetAllUser();
+            if (users == null)
+            {
+                return new KeyValuePair<MessageViewModel, List<UserProfileViewModel>>(
+                    new MessageViewModel
+                    {
+                        StatusCode = System.Net.HttpStatusCode.NotFound,
+                        Message = string.Empty,
+                    },null
+                    );
+            }
+            return new KeyValuePair<MessageViewModel, List<UserProfileViewModel>>(
+                new MessageViewModel
+                {
+                    StatusCode = System.Net.HttpStatusCode.OK,
+                    Message = string.Empty,
+                }, users
+                );
         }
 
         public KeyValuePair<MessageViewModel, UserProfileViewModel> GetUser(int id)
@@ -102,6 +123,50 @@ namespace ArtWorkWeb.Service.Implement
                     Message = "User not found or profile update failed"
                 };
             }
+        }
+        public async Task<IPaginate<GetUserResponse>> GetAllUsers(UserFilter filter, PagingModel pagingModel)
+        {
+            IPaginate<GetUserResponse> response = await _unitOfWork.GetRepository<User>().GetPagingListAsync(
+                selector: x => _mapper.Map<GetUserResponse>(x),
+                filter: filter,
+                orderBy: x => x.OrderBy(x => x.Role),
+                page: pagingModel.page,
+                size: pagingModel.size
+                );
+            return response;
+        }
+
+        public async Task<bool> Register(RegisterRequest request)
+        {
+            if(request.Username.IsNullOrEmpty() || request.Password.Length < 8 || request.Email.IsNullOrEmpty())
+{
+                return false;
+            }
+            
+            var user = new User
+            {
+                Username = request.Username,
+                Password = request.Password,
+                Gender = request.Gender,
+                Email = request.Email,
+                Role = RoleEnum.Customer.ToString()
+            };
+            var existingUser =  _userRepository.GetUserByUsername(user.Username);
+            if (existingUser != null)
+            {
+                // Tên đăng ký đã tồn tại, không thể đăng ký
+                return false;
+            }
+            var existingEmail = _userRepository.GetUserByEmail(user.Email);
+            if (existingEmail != null)
+            {
+                // Tên đăng ký đã tồn tại, không thể đăng ký
+                return false;
+            }
+            var model = await _userRepository.Register(user);
+            if(model == null) return false;
+            return true;
+
         }
     }
 }

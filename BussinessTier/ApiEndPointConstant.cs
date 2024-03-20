@@ -18,11 +18,22 @@ namespace BussinessTier
             public const string AuthenticationEndpoint = ApiEndpoint + "/auth";
             public const string Login = AuthenticationEndpoint + "/login";
         }
+        public static class User
+        {
+            public const string UsersEndpoint = ApiEndpoint + "/users";
+            public const string UserEndpoint = UsersEndpoint + "/{id}";
+            //public const string UserUpdateEndpoint = UserEndpoint + "/roles";
+        }
         public static class ArtWork
         {
             public const string ArtWorksEndPoint = ApiEndpoint + "/artworks";
             public const string ArtWorkEndPoint = ArtWorksEndPoint + "/{id}";
             public const string GroupCategories = ApiEndpoint + "/categories";
+        }
+        public static class Sub
+        {
+            public const string SubsEndPoint = ApiEndpoint + "/subs";
+            public const string SubEndPoint = SubsEndPoint + "/{id}";
         }
     }
 }

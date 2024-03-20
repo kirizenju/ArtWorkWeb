@@ -24,7 +24,6 @@ namespace DataTier.Models
 
 
 
-
         public virtual User? OwnerNavigation { get; set; }
         public virtual ICollection<ImageList> ImageLists { get; set; }
         public virtual ICollection<Like> Likes { get; set; }
