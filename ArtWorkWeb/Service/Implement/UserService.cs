@@ -3,17 +3,14 @@ using AutoMapper;
 using BussinessTier;
 using BussinessTier.Enums;
 using BussinessTier.Payload;
-using BussinessTier.Payload.ArtWork;
 using BussinessTier.Payload.User;
 using DataTier.Models;
 using DataTier.Repository.Implement;
 using DataTier.Repository.Interface;
 using DataTier.View.Common;
 using DataTier.View.User;
-using System;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq.Expressions;
-using System.Security.Principal;
-using System.Threading.Tasks;
 
 namespace ArtWorkWeb.Service.Implement
 {
@@ -22,8 +19,9 @@ namespace ArtWorkWeb.Service.Implement
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<UserService> logger, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
+        public UserService(IUnitOfWork<projectSWDContext> unitOfWork, ILogger<UserService> logger, IMapper mapper, IHttpContextAccessor httpContextAccessor, IUserRepository userRepository) : base(unitOfWork, logger, mapper, httpContextAccessor)
         {
+            _userRepository = userRepository;
         }
 
         public bool BanUser(int id)
@@ -138,5 +136,37 @@ namespace ArtWorkWeb.Service.Implement
             return response;
         }
 
+        public async Task<bool> Register(RegisterRequest request)
+        {
+            if(request.Username.IsNullOrEmpty() || request.Password.Length < 8 || request.Email.IsNullOrEmpty())
+{
+                return false;
+            }
+            
+            var user = new User
+            {
+                Username = request.Username,
+                Password = request.Password,
+                Gender = request.Gender,
+                Email = request.Email,
+                Role = RoleEnum.Customer.ToString()
+            };
+            var existingUser =  _userRepository.GetUserByUsername(user.Username);
+            if (existingUser != null)
+            {
+                // Tên đăng ký đã tồn tại, không thể đăng ký
+                return false;
+            }
+            var existingEmail = _userRepository.GetUserByEmail(user.Email);
+            if (existingEmail != null)
+            {
+                // Tên đăng ký đã tồn tại, không thể đăng ký
+                return false;
+            }
+            var model = await _userRepository.Register(user);
+            if(model == null) return false;
+            return true;
+
+        }
     }
 }
