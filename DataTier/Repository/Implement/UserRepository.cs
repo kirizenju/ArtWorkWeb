@@ -34,9 +34,41 @@ public class UserRepository : IUserRepository
         }).ToList();
     }
 
+    public User GetUserByEmail(string? email)
+    {
+        return _context.Users.Where(e => e.Email == email).FirstOrDefault();
+    }
+
     public User? GetUserByID(int userid)
     {
         return _context.Users.Where(e => e.IdUser == userid).FirstOrDefault();
+    }
+
+    public User GetUserByUsername(string username)
+    {
+        return _context.Users.FirstOrDefault(e => e.Username == username);
+    }
+
+    public Task<User> Register(User user)
+    {
+        try
+        {
+            var newuser = new User
+            {
+                Username = user.Username,
+                Password = user.Password,
+                Email = user.Email,
+                Gender = user.Gender,
+            };
+            var result = _context.Users.Add(user);
+            _context.SaveChanges();
+            if (result == null) return Task.FromResult<User>(null);
+            return Task.FromResult<User>(result.Entity);
+        }
+        catch
+        {
+            return Task.FromResult<User>(null);
+        }
     }
 
     public bool UpdateProfile(ProfileUpdateRequest model)

@@ -15,6 +15,6 @@ namespace ArtWorkWeb.Service.Interfaces
         Task<LoginResponse> Login(LoginRequest loginRequest);
         KeyValuePair<MessageViewModel,List<UserProfileViewModel>> GetAllUser();
         MessageViewModel UpdateProfile(ProfileUpdateRequest model);
-
+        Task<bool> Register(RegisterRequest request);
     }
 }
