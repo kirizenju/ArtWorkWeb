@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BussinessTier.Payload.Sub
 {
-    public class SubscriptionFilter
+    public class SubFilter
     {
         public decimal Amount { get; set; }
         public string? DesSubscription { get; set; }

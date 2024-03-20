@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
+using DataTier.Models;
 
 namespace BussinessTier.Payload.Sub
 {
@@ -15,6 +15,6 @@ namespace BussinessTier.Payload.Sub
         public string? DesSubscription { get; set; }
         public string? SubscriptionName { get; set; }
 
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        //public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

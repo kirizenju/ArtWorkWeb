@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using ArtWorkWeb.Service.Interfaces;
 using ArtWorkWeb.Service.Implement;
+using SubWeb.Service.Implement;
 
 namespace ArtWorkWeb.Extensions
 {
@@ -37,6 +38,7 @@ namespace ArtWorkWeb.Extensions
             services.AddScoped<IArtWorkService, ArWorkService>();
             services.AddScoped<ISubcriptionService, SubcriptionService>();
             services.AddTransient<ISubcriptionRepository, SubcriptionRepository>();
+            services.AddScoped<ISubService, SubService>();
 
             return services;
         }

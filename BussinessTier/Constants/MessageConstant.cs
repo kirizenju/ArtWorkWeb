@@ -26,5 +26,18 @@ namespace BussinessTier.Constants
           
 
         }
+        public static class Sub
+        {
+            public const string SubNameExisted = "Subscription đã tồn tại";
+            public const string CreateNewSubFailedMessage = "Tạo mới Subscription thất bại";
+            public const string UpdateSubFailedMessage = "Cập nhật thông tin Subscriptionthất bại";
+            public const string UpdateSubSuccessMessage = "Cập nhật thông tin Subscription thành công";
+            public const string EmptySubIdMessage = "Subscription Id không hợp lệ";
+            public const string SubNotFoundMessage = "Subscription không tồn tại trong hệ thống";
+            public const string UpdateSuccessMessage = "Cập nhật trạng thái thành công";
+            public const string UpdateFailedMessage = "Cập nhật trạng thái thất bại";
+
+
+        }
     }
 }

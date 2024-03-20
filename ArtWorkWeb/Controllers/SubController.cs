@@ -4,6 +4,7 @@ using BussinessTier.Payload.ArtWork;
 using BussinessTier.Payload;
 using BussinessTier;
 using Microsoft.AspNetCore.Mvc;
+using BussinessTier.Payload.Sub;
 
 namespace ArtWorkWeb.Controllers
 {
@@ -16,46 +17,46 @@ namespace ArtWorkWeb.Controllers
             _subService = subService;
         }
 
-        //[HttpPost(ApiEndPointConstant.ArtWork.ArtWorksEndPoint)]
-        //[ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> CreateNewArtWork(CreateArtWorkRequest request)
+        [HttpPost(ApiEndPointConstant.Sub.SubsEndPoint)]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        public async Task<IActionResult> CreateNewSub(CreateSubRequest request)
+        {
+            var response = await _subService.CreateNewSub(request);
+            return Ok(response);
+        }
+
+        //[HttpGet(ApiEndPointConstant.Sub.SubsEndPoint)]
+        //[ProducesResponseType(typeof(GetSubscriptionResponse), StatusCodes.Status200OK)]
+        //public async Task<IActionResult> GetAllSubs([FromQuery] SubFilter filter, [FromQuery] PagingModel pagingModel)
         //{
-        //    var response = await _artWorkService.CreateNewArtwork(request);
-        //    return Ok(response);
+        //    var response = await _subService.GetAllSubs(filter, pagingModel);
+        //   return Ok(response);
         //}
 
-        //[HttpGet(ApiEndPointConstant.ArtWork.ArtWorksEndPoint)]
-        //[ProducesResponseType(typeof(GetArtWorkResponse), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> GetAllArtWorks([FromQuery] ArtWorkFilter filter, [FromQuery] PagingModel pagingModel)
-        //{
-        //    var response = await _artWorkService.GetAllArtWorks(filter, pagingModel);
-        //    return Ok(response);
-        //}
+        [HttpGet(ApiEndPointConstant.Sub.SubEndPoint)]
+        [ProducesResponseType(typeof(GetSubscriptionResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetArtWorkById(int id)
+        {
+            var response = await _subService.GetSubById(id);
+            return Ok(response);
+        }
 
-        //[HttpGet(ApiEndPointConstant.ArtWork.ArtWorkEndPoint)]
-        //[ProducesResponseType(typeof(GetArtWorkResponse), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> GetArtWorkById(int id)
-        //{
-        //    var response = await _artWorkService.GetArtWrokById(id);
-        //    return Ok(response);
-        //}
+        [HttpPut(ApiEndPointConstant.Sub.SubEndPoint)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateSubInfo(int id, UpdateSubscriptionRequest request)
+        {
+            var isSuccessful = await _subService.UpdateSubInfo(id, request);
+            if (!isSuccessful) return Ok(MessageConstant.Sub.UpdateFailedMessage);
+            return Ok(MessageConstant.Sub.UpdateSuccessMessage);
+        }
 
-        //[HttpPut(ApiEndPointConstant.ArtWork.ArtWorkEndPoint)]
-        //[ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> UpdateArtWorkInfo(int id, UpdateArtWorkRequest request)
-        //{
-        //    var isSuccessful = await _artWorkService.UpdateArtWorkInfo(id, request);
-        //    if (!isSuccessful) return Ok(MessageConstant.ArtWork.UpdateStatusFailedMessage);
-        //    return Ok(MessageConstant.ArtWork.UpdateStatusSuccessMessage);
-        //}
-
-        //[HttpDelete(ApiEndPointConstant.ArtWork.ArtWorkEndPoint)]
-        //[ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> DeleteArtWork(int id)
-        //{
-        //    var isSuccessful = await _artWorkService.DeleteArtWork(id);
-        //    if (!isSuccessful) return Ok(MessageConstant.ArtWork.UpdateStatusFailedMessage);
-        //    return Ok(MessageConstant.ArtWork.UpdateStatusSuccessMessage);
-        //}
+        [HttpDelete(ApiEndPointConstant.Sub.SubEndPoint)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteSub(int id)
+        {
+            var isSuccessful = await _subService.DeleteSub(id);
+            if (!isSuccessful) return Ok(MessageConstant.Sub.UpdateFailedMessage);
+            return Ok(MessageConstant.Sub.UpdateSuccessMessage);
+        }
     }
 }
