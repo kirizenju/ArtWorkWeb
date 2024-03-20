@@ -149,7 +149,7 @@ namespace ArtWorkWeb.Service.Implement
                 Password = request.Password,
                 Gender = request.Gender,
                 Email = request.Email,
-                Role = RoleEnum.Customer.ToString()
+                Role = RoleEnum.User.ToString()
             };
             var existingUser =  _userRepository.GetUserByUsername(user.Username);
             if (existingUser != null)
