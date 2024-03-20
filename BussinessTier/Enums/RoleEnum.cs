@@ -9,6 +9,7 @@ namespace BussinessTier.Enums
     public enum RoleEnum
     {
         Admin,
-        Customer
+        User,
+        Creator
     }
 }
