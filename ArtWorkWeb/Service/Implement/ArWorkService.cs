@@ -101,13 +101,22 @@ namespace ArtWorkWeb.Service.Implement
 
         public async Task<bool> ArtWorkOrder(int id)
         {
+            // tạo order mới
             _ = _unitOfWork.GetRepository<Order>().InsertAsync(new Order
             {
-                IdArtwork = id,
+                ArtworkId = id,
                 UserId = 1,
                 Date = DateTime.Now,
                 OrderStatus = 1
             });
+
+            // cập nhật lại trạng thái của sản phẩm
+            Artwork artWork = (await _unitOfWork.GetRepository<Artwork>().SingleOrDefaultAsync(
+                               predicate: x => x.IdArtwork.Equals(id))
+                ?? throw new BadHttpRequestException(MessageConstant.ArtWork.ArtWorkNotFoundMessage)) ?? throw new BadHttpRequestException(MessageConstant.ArtWork.ArtWorkNotFoundMessage);
+            artWork.Status = "Sold out";
+            _unitOfWork.GetRepository<Artwork>().UpdateAsync(artWork);
+
             bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
             return isSuccessful;
         }
