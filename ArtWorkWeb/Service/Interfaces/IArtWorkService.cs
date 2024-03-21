@@ -2,6 +2,7 @@
 using BussinessTier.Payload;
 using BussinessTier.Payload.ArtWork;
 using DataTier.Repository.Implement;
+using DataTier.View.Product;
 
 namespace ArtWorkWeb.Service.Interfaces
 {
@@ -12,5 +13,7 @@ namespace ArtWorkWeb.Service.Interfaces
         Task<IPaginate<GetArtWorkResponse>> GetAllArtWorks(ArtWorkFilter filter, PagingModel pagingModel);
         Task<GetArtWorkResponse> GetArtWrokById(int artWorkId);
         Task<bool> UpdateArtWorkInfo(int artWorkID, UpdateArtWorkRequest request);
+        Task<List<CategoryViewModel>> GetAllCategories();
+        Task<bool> ArtWorkOrder(int id);
     }
 }

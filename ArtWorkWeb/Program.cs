@@ -34,11 +34,12 @@ public class Program
         builder.Services.AddConfigSwagger();
 
         var app = builder.Build();
-        //app.UseCors(builder => 
-        //{ builder.AllowAnyOrigin()
-        //    .AllowAnyMethod()
-        //    .AllowAnyHeader(); 
-        //});
+        app.UseCors(builder =>
+        {
+            builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {

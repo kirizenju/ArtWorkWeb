@@ -22,7 +22,7 @@ public class UserRepository : IUserRepository
 
     public List<UserProfileViewModel> GetAllUser()
     {
-        return _context.Users.Where(e => e.Role == "Customer").Select(e => new UserProfileViewModel
+        return _context.Users.Where(e => e.Role == "User" || e.Role == "Creator").Select(e => new UserProfileViewModel
         {
             Username = e.Username,
             Password = e.Password,

@@ -16,6 +16,7 @@ namespace ArtWorkWeb.Controllers
         {
             _productService = productService;
         }
+
         [HttpGet("allartworkuser/{id}")]
         public IActionResult GetAllProductUser(int id)
         {
@@ -26,6 +27,7 @@ namespace ArtWorkWeb.Controllers
             }
             return Ok(reponse.Value);
         }
+
         [HttpGet("image/{id}")]
         public IActionResult GetImage(int id)
         {
