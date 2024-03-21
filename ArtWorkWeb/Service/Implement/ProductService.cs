@@ -3,6 +3,8 @@ using AutoMapper;
 using DataTier.Repository.Interface;
 using DataTier.View.Common;
 using DataTier.View.Product;
+using System.Collections.Generic;
+using System.Net;
 
 namespace ArtWorkWeb.Service.Implement
 {
@@ -25,7 +27,7 @@ namespace ArtWorkWeb.Service.Implement
                 return new KeyValuePair<MessageViewModel, List<UserProductViewModel>>(
                         new MessageViewModel
                         {
-                            StatusCode = System.Net.HttpStatusCode.NotFound,
+                            StatusCode = HttpStatusCode.NotFound,
                             Message = "No product found"
                         },
                         new List<UserProductViewModel>()
@@ -34,7 +36,7 @@ namespace ArtWorkWeb.Service.Implement
             return new KeyValuePair<MessageViewModel, List<UserProductViewModel>>(
                 new MessageViewModel
                 {
-                    StatusCode = System.Net.HttpStatusCode.OK,
+                    StatusCode = HttpStatusCode.OK,
                     Message = string.Empty
                 },
                 response
@@ -49,7 +51,7 @@ namespace ArtWorkWeb.Service.Implement
                 return new KeyValuePair<MessageViewModel, List<ImageViewModel>>(
                         new MessageViewModel
                         {
-                            StatusCode = System.Net.HttpStatusCode.NotFound,
+                            StatusCode = HttpStatusCode.NotFound,
                             Message = "No product found"
                         },
                         new List<ImageViewModel>()
@@ -58,14 +60,14 @@ namespace ArtWorkWeb.Service.Implement
             return new KeyValuePair<MessageViewModel, List<ImageViewModel>>(
                 new MessageViewModel
                 {
-                    StatusCode = System.Net.HttpStatusCode.OK,
+                    StatusCode = HttpStatusCode.OK,
                     Message = string.Empty
                 },
                 response
                 );
         }
 
-        KeyValuePair<MessageViewModel, List<ProductResponseModel>> IProductService.GetHotProduct()
+        public KeyValuePair<MessageViewModel, List<ProductResponseModel>> GetHotProduct()
         {
             var response = _productRepository.GetHotProduct();
             if (response == null)
@@ -73,7 +75,7 @@ namespace ArtWorkWeb.Service.Implement
                 return new KeyValuePair<MessageViewModel, List<ProductResponseModel>>(
                         new MessageViewModel
                         {
-                            StatusCode = System.Net.HttpStatusCode.NotFound,
+                            StatusCode = HttpStatusCode.NotFound,
                             Message = "No product found"
                         },
                         null
@@ -82,14 +84,14 @@ namespace ArtWorkWeb.Service.Implement
             return new KeyValuePair<MessageViewModel, List<ProductResponseModel>>(
                 new MessageViewModel
                 {
-                    StatusCode = System.Net.HttpStatusCode.OK,
+                    StatusCode = HttpStatusCode.OK,
                     Message = string.Empty
                 },
                 response
                 );
         }
 
-        KeyValuePair<MessageViewModel, ProductResponseModel> IProductService.GetProduct(int id)
+        public KeyValuePair<MessageViewModel, ProductResponseModel> GetProduct(int id)
         {
             var response = _productRepository.GetProduct(id);
             if (response == null)
@@ -97,7 +99,7 @@ namespace ArtWorkWeb.Service.Implement
                 return new KeyValuePair<MessageViewModel, ProductResponseModel>(
                         new MessageViewModel
                         {
-                            StatusCode = System.Net.HttpStatusCode.NotFound,
+                            StatusCode = HttpStatusCode.NotFound,
                             Message = "No product found"
                         },
                         null
@@ -106,12 +108,27 @@ namespace ArtWorkWeb.Service.Implement
             return new KeyValuePair<MessageViewModel, ProductResponseModel>(
                 new MessageViewModel
                 {
-                    StatusCode = System.Net.HttpStatusCode.OK,
+                    StatusCode = HttpStatusCode.OK,
                     Message = string.Empty
                 },
                 response
                 );
         }
+
+        public KeyValuePair<MessageViewModel, ProductResponseModel> UpdateProduct(int id, ProductResponseModel productDto)
+        {
+            var updatedProduct = _productRepository.Update(id, productDto);
+
+            if (updatedProduct == null)
+            {
+                return new KeyValuePair<MessageViewModel, ProductResponseModel>(
+                    new MessageViewModel { StatusCode = HttpStatusCode.NotFound, Message = "Product not found" }, null);
+            }
+
+            return new KeyValuePair<MessageViewModel, ProductResponseModel>(
+                new MessageViewModel { StatusCode = HttpStatusCode.OK, Message = "Product updated successfully" }, updatedProduct);
+        }
+
 
     }
 }

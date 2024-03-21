@@ -104,6 +104,70 @@ namespace DataTier.Repository.Implement
                 })
                 .FirstOrDefault();
         }
+        public ProductResponseModel UpdateProduct(int id, ProductResponseModel productDto)
+        {
+            var existingProduct = _context.Artworks.FirstOrDefault(p => p.IdArtwork == id);
+
+            if (existingProduct == null)
+            {
+                return null;
+            }
+
+            // Update product fields from DTO
+            existingProduct.Name = productDto.Name;
+            existingProduct.Price = productDto.Price;
+            existingProduct.Status = productDto.Status;
+            existingProduct.CategoryName = productDto.CategoryName;
+            existingProduct.Author = productDto.Author;
+            existingProduct.Description = productDto.Description;
+
+            // Save changes to the database
+            _context.SaveChanges();
+
+            // Return updated product information
+            return new ProductResponseModel
+            {
+                IdArtwork = existingProduct.IdArtwork,
+                Name = existingProduct.Name,
+                Price = existingProduct.Price,
+                Status = existingProduct.Status,
+                CategoryName = existingProduct.CategoryName,
+                Author = existingProduct.Author,
+                Description = existingProduct.Description
+            };
+        }
+        public ProductResponseModel Update(int id, ProductResponseModel productDto)
+        {
+            var existingProduct = _context.Artworks.FirstOrDefault(p => p.IdArtwork == id);
+
+            if (existingProduct == null)
+            {
+                return null;
+            }
+
+            // Update product fields from DTO
+            existingProduct.Name = productDto.Name;
+            existingProduct.Price = productDto.Price;
+            existingProduct.Status = productDto.Status;
+            existingProduct.CategoryName = productDto.CategoryName;
+            existingProduct.Author = productDto.Author;
+            existingProduct.Description = productDto.Description;
+
+            // Save changes to the database
+            _context.SaveChanges();
+
+            // Return updated product information
+            return new ProductResponseModel
+            {
+                IdArtwork = existingProduct.IdArtwork,
+                Name = existingProduct.Name,
+                Price = existingProduct.Price,
+                Status = existingProduct.Status,
+                CategoryName = existingProduct.CategoryName,
+                Author = existingProduct.Author,
+                Description = existingProduct.Description
+            };
+        }
 
     }
 }

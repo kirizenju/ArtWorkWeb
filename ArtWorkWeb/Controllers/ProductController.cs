@@ -1,4 +1,5 @@
 ﻿using ArtWorkWeb.Service.Interfaces;
+using DataTier.View.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -55,6 +56,17 @@ namespace ArtWorkWeb.Controllers
 
             return Ok(response);
         }
+        [HttpPut("{id}")]
+        public IActionResult UpdateProduct(int id, [FromBody] ProductResponseModel productDto)
+        {
+            var (message, response) = _productService.UpdateProduct(id, productDto);
 
+            if (response == null)
+            {
+                return NotFound(message);
+            }
+
+            return Ok(response);
+        }
     }
 }
