@@ -23,6 +23,7 @@ namespace DataTier.Models
         public string? Avatar { get; set; }
         public string? Phone { get; set; }
         public string? Address { get; set; }
+        public bool? IsActive { get; set; }
         public virtual ICollection<Artwork> Artworks { get; set; }
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
