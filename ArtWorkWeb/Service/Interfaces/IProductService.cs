@@ -9,5 +9,6 @@ namespace ArtWorkWeb.Service.Interfaces
         KeyValuePair<MessageViewModel, List<ProductResponseModel>> GetHotProduct();
         KeyValuePair<MessageViewModel, ProductResponseModel> GetProduct(int id);
         KeyValuePair<MessageViewModel, List<ImageViewModel>> GetImage(int id);
+        KeyValuePair<MessageViewModel, ProductResponseModel> UpdateProduct(int id, ProductResponseModel productDto);
     }
 }

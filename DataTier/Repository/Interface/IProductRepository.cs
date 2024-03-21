@@ -13,5 +13,7 @@ namespace DataTier.Repository.Interface
         List<ProductResponseModel> GetHotProduct();
         List<ImageViewModel> GetImageURL(int artworkid);
         ProductResponseModel GetProduct(int id);
+        ProductResponseModel UpdateProduct(int id, ProductResponseModel productDto);
+        ProductResponseModel Update(int id, ProductResponseModel productDto);
     }
 }
