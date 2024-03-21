@@ -41,8 +41,20 @@ namespace ArtWorkWeb.Service.Implement
 
         public async Task<IPaginate<GetArtWorkResponse>> GetAllArtWorks(ArtWorkFilter filter, PagingModel pagingModel)
         {
+            // Example of authorizing user filter.Owner = 1;
             IPaginate<GetArtWorkResponse> response = await _unitOfWork.GetRepository<Artwork>().GetPagingListAsync(
-                selector: x => _mapper.Map<GetArtWorkResponse>(x),
+                //selector: x => _mapper.Map<GetArtWorkResponse>(x),
+                selector: a => new GetArtWorkResponse
+                {
+                    IdArtwork = a.IdArtwork,
+                    Name = a.Name,
+                    Price = a.Price,
+                    Owner = a.Owner,
+                    Status = a.Status,
+                    CategoryName = a.CategoryName,
+                    Author = a.Author,
+                    ImageLists = a.ImageLists
+                },
                 filter: filter,
                 orderBy: x => x.OrderBy(x => x.Name),
                 page: pagingModel.page,
