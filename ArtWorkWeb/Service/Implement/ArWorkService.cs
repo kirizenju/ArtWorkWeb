@@ -60,11 +60,26 @@ namespace ArtWorkWeb.Service.Implement
                 predicate: x => x.IdArtwork.Equals(artWorkID))
                 ?? throw new BadHttpRequestException(MessageConstant.ArtWork.ArtWorkNotFoundMessage);
 
+            var imgLists = await _unitOfWork.GetRepository<ImageList>().GetListAsync(predicate: x => x.ArtworkId.Equals(artWorkID));
+            if (imgLists != null && imgLists.Any())
+            {
+                _unitOfWork.GetRepository<ImageList>().DeleteRangeAsync(imgLists);
+            }
             updateArtWork.Name = string.IsNullOrEmpty(request.Name) ? updateArtWork.Name : request.Name;
             updateArtWork.Owner = request.Owner;
             updateArtWork.Price = request.Price;
             updateArtWork.Status = request.Status;
             updateArtWork.Owner = request.Owner;
+            updateArtWork.Author = request.Author;
+            updateArtWork.CategoryName = request.CategoryName;
+            updateArtWork.ImageLists = request.ImageLists.Select(x => new ImageList
+            {
+                ArtworkId = updateArtWork.IdArtwork,
+                ImageUrl = x.ImageUrl,
+                IdImageList = x.IdImageList ?? 0
+            }).ToList();
+
+
             _unitOfWork.GetRepository<Artwork>().UpdateAsync(updateArtWork);
             bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
             return isSuccessful;
