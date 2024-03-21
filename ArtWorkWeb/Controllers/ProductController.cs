@@ -70,5 +70,18 @@ namespace ArtWorkWeb.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("TopLiked/{like}")]
+        public IActionResult GetTopLikedProducts(int count)
+        {
+            var (message, response) = _productService.GetTopLikedProducts(count);
+
+            if (response == null || response.Count == 0)
+            {
+                return NotFound(message);
+            }
+
+            return Ok(response);
+        }
     }
 }
