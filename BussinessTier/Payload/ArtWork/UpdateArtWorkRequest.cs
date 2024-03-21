@@ -14,5 +14,13 @@ namespace BussinessTier.Payload.ArtWork
         public string? Status { get; set; }
         public string? CategoryName { get; set; }
         public string? Author { get; set; }
+        public virtual ICollection<ImageListCustom>? ImageLists { get; set; }
+    }
+
+    public class ImageListCustom
+    {
+        public int? IdImageList { get; set; }
+        public string ImageUrl { get; set; } = null!;
+        public int? ArtworkId { get; set; }
     }
 }
