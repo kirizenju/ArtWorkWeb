@@ -51,20 +51,13 @@ namespace ArtWorkWeb.Controllers
         public IActionResult GetAllUser()
         {
             var response = _userService.GetAllUser();
-
-            if (response.Key == null)
-            {
-                return NotFound("Response key is null.");
-            }
-
-            if (response.Key.StatusCode == HttpStatusCode.NotFound)
+            if (response.Key != null && response.Key.StatusCode == HttpStatusCode.NotFound)
             {
                 return NotFound(response.Key);
             }
-
             return Ok(response.Value);
         }
 
-    
-}
+
+    }
 }

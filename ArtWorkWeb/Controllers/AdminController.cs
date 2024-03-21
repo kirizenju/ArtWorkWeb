@@ -102,4 +102,9 @@ public class AdminControllerHelper
     {
         return _context.Users.Any(e => e.IdUser == id);
     }
+    [HttpGet("GetAllUsers")]
+    public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+    {
+        return await _context.Users.ToListAsync();
+    }
 }
